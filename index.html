@@ -141,7 +141,11 @@ a{color:var(--purple)}
 .why-grid>div:hover{background:color-mix(in srgb,var(--c) 8%,var(--surface))}
 .why-grid .word{color:var(--c)}
 .why-grid .word{font:800 1.6rem/1 var(--f-display);letter-spacing:-.03em}
-.why-grid .from{font:500 .7rem/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.why-grid .wi{width:44px;height:44px;border-radius:12px;background:var(--c);display:grid;place-items:center;box-shadow:0 10px 22px -10px var(--c)}
+.why-grid .wi img{width:22px;height:22px}
+.why-grid>div{grid-template-rows:auto auto 1fr auto}
+.why-grid .how{font-size:.85rem;color:var(--muted);padding-top:10px;border-top:1px solid var(--line);margin-top:4px}
+.why-grid .how b{color:var(--c);font-weight:600}
 .why-grid p{color:var(--muted);font-size:.95rem}
 @media (max-width:900px){.why-grid{grid-template-columns:1fr 1fr}.why-grid>div:nth-child(2){border-right:0}.why-grid>div:nth-child(-n+2){border-bottom:1px solid var(--line)}}
 @media (max-width:520px){.why-grid{grid-template-columns:1fr}.why-grid>div{border-right:0;border-bottom:1px solid var(--line)}.why-grid>div:last-child{border-bottom:0}}
@@ -395,13 +399,13 @@ dialog.lb button{position:absolute;right:10px;top:10px;border:0;border-radius:8p
     <div class="sec-head">
       <span class="eyebrow">Why it matters</span>
       <h2>Reports hold the answers. Files keep them locked away.</h2>
-      <p class="lede">Every scheduled report your ERP prints is full of answers people need: discrepancies, negative availability, open orders. Know Your Reports turns each one into a definition with four guarantees, and every guarantee is built by a specific step in the wizard.</p>
+      <p class="lede">Every scheduled report your ERP prints is full of answers people need: discrepancies, negative availability, open orders. Know Your Reports turns each one into a definition with four guarantees, each one built into the wizard itself.</p>
     </div>
     <div class="why-grid">
-      <div style="--c:var(--s5)"><span class="from">Step 5 · Generate Script</span><span class="word">Validated</span><p>The AI-written parsing script is test-run against the real file, and you see the extracted records before anything is saved.</p></div>
-      <div style="--c:var(--s2)"><span class="from">Step 2 · Context &amp; Roles</span><span class="word">Role-secured</span><p>Business roles decide who can view. Functional roles decide who can manage. Both are suggested from the report itself.</p></div>
-      <div style="--c:var(--s3)"><span class="from">Step 3 · Sample Utterances</span><span class="word">Conversational</span><p>Natural-language sample questions teach the system how people will actually ask about this report.</p></div>
-      <div style="--c:var(--s6)"><span class="from">Step 6 · Summary</span><span class="word">Ready for BaaS</span><p>One click on “Save configuration” publishes the finished definition and schedules it to run.</p></div>
+      <div style="--c:var(--s5)"><span class="wi"><img src="assets/icon-script.png" alt=""></span><span class="word">Validated</span><p>The AI-written parsing script is test-run against the real file, and you see the extracted records before anything is saved.</p><span class="how">How: <b>Generate Script</b></span></div>
+      <div style="--c:var(--s2)"><span class="wi"><img src="assets/icon-roles.png" alt=""></span><span class="word">Role-secured</span><p>Business roles decide who can view. Functional roles decide who can manage. Both are suggested from the report itself.</p><span class="how">How: <b>Context &amp; Roles</b></span></div>
+      <div style="--c:var(--s3)"><span class="wi"><img src="assets/icon-utterances.png" alt=""></span><span class="word">Conversational</span><p>Natural-language sample questions teach the system how people will actually ask about this report.</p><span class="how">How: <b>Sample Utterances</b></span></div>
+      <div style="--c:var(--s6)"><span class="wi"><img src="assets/icon-summary.png" alt=""></span><span class="word">Ready for BaaS</span><p>One click on “Save configuration” publishes the finished definition and schedules it to run.</p><span class="how">How: <b>Summary</b></span></div>
     </div>
     <div class="who"><b>Who it serves, in the demo report:</b><span class="p">Warehouse managers</span><span class="p">Inventory analysts</span><span class="p">Accounting &amp; finance teams</span><span class="p">Purchasing managers</span></div>
   </div>
