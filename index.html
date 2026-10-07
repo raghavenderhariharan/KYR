@@ -319,7 +319,7 @@ dialog.lb button{position:absolute;right:10px;top:10px;border:0;border-radius:8p
 
 <header class="topbar">
   <div class="wrap">
-    <a class="brand" href="#top"><img src="assets/infor-logo.png" width="72" height="34" alt="Infor"></a>
+    <a class="brand" href="#top"><img src="assets/infor-logo-white.png" width="72" height="34" alt="Infor"></a>
     <span class="brand-sub">Know Your Reports</span>
     <nav class="toplinks" aria-label="Sections">
       <a href="#value">Why KYR</a>
@@ -710,7 +710,7 @@ if(!reduce){
 }
 
 /* Infor wordmark in the bottom-right corner of every section */
-document.querySelectorAll("main>section").forEach(sec=>{const m=document.createElement("img");m.className="logo-mark";m.src="assets/infor-logo.png";m.alt="";m.width=64;m.height=30;sec.appendChild(m)});
+document.querySelectorAll("main>section").forEach(sec=>{const m=document.createElement("img");m.className="logo-mark";m.src="assets/infor-logo-white.png";m.alt="";m.width=64;m.height=30;sec.appendChild(m)});
 
 /* presenter navigation: arrow keys / buttons jump section to section */
 const secs=[...document.querySelectorAll("section[data-nav], .panel")].sort((a,b)=>a.offsetTop-b.offsetTop);
