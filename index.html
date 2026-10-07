@@ -298,12 +298,10 @@ a{color:var(--purple)}
 .legal{font:400 .74rem/1.5 var(--f-mono);color:color-mix(in srgb,var(--deep-fg) 55%,var(--deep));margin-top:48px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 
 /* ---------- presenter nav ---------- */
-.pnav{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:50;display:flex;align-items:center;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px;box-shadow:var(--shadow)}
-.pnav button{width:34px;height:34px;border-radius:50%;border:0;background:var(--sunk);color:var(--fg);cursor:pointer;font:600 1rem/1 var(--f-body);display:grid;place-items:center}
-.pnav button:hover{background:var(--purple);color:#fff}
-.pnav{border-color:color-mix(in srgb,var(--purple) 30%,var(--line))}
-.pnav .lbl{font:500 .72rem/1 var(--f-mono);color:var(--muted);padding-inline:8px;min-width:118px;text-align:center;white-space:nowrap}
-@media (max-width:520px){.pnav .lbl{display:none}}
+.pnav{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:50;display:flex;gap:10px}
+.pnav button{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);color:var(--fg);cursor:pointer;display:grid;place-items:center;padding:0;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:background .3s,border-color .3s}
+.pnav button svg{width:18px;height:18px}
+.pnav button:hover{background:var(--purple);border-color:var(--purple);color:#fff}
 
 /* lightbox */
 dialog.lb{border:0;padding:0;background:transparent;max-width:min(96vw,1700px);width:100%}
@@ -515,10 +513,9 @@ dialog.lb button{position:absolute;right:10px;top:10px;border:0;border-radius:8p
 </section>
 </main>
 
-<div class="pnav" role="navigation" aria-label="Presenter controls">
-  <button type="button" id="prev" aria-label="Previous section">‹</button>
-  <span class="lbl" id="plbl">Know Your Reports</span>
-  <button type="button" id="next-btn" aria-label="Next section">›</button>
+<div class="pnav" role="navigation" aria-label="Previous and next section">
+  <button type="button" id="prev" aria-label="Previous section"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <button type="button" id="next-btn" aria-label="Next section"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
 </div>
 
 <dialog class="lb" id="lb"><img id="lbimg" alt=""><button type="button" id="lbclose">Close</button></dialog>
@@ -713,8 +710,8 @@ if(!reduce){
 document.querySelectorAll("main>section").forEach(sec=>{const m=document.createElement("img");m.className="logo-mark";m.src="assets/infor-logo-transparent.png";m.alt="";m.width=62;m.height=25;sec.appendChild(m)});
 
 /* presenter navigation: arrow keys / buttons jump section to section */
-const secs=[...document.querySelectorAll("section[data-nav], .panel")].sort((a,b)=>a.offsetTop-b.offsetTop);
-const lbl=document.getElementById("plbl"), links=[...document.querySelectorAll(".toplinks a")];
+const secs=[...document.querySelectorAll("section[data-nav], .panel")].sort((a,b)=>a.getBoundingClientRect().top-b.getBoundingClientRect().top);
+const links=[...document.querySelectorAll(".toplinks a")];
 function curIdx(){ const y=scrollY+innerHeight*.3; let k=0; secs.forEach((s,i)=>{ if(s.getBoundingClientRect().top+scrollY<=y) k=i }); return k }
 function go(d){ const i=Math.max(0,Math.min(secs.length-1,curIdx()+d)); secs[i].scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"}) }
 document.getElementById("prev").onclick=()=>go(-1);
@@ -725,8 +722,6 @@ addEventListener("keydown",e=>{
   if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();go(-1)}
 });
 function label(){
-  const s=secs[curIdx()];
-  lbl.textContent=s.classList.contains("panel")?`Step ${PANELS.find(p=>p.id===s.id).step} of 6`:s.dataset.nav;
   const top=[...document.querySelectorAll("section[data-nav]")].filter(x=>x.getBoundingClientRect().top<innerHeight*.3).pop();
   links.forEach(a=>a.classList.toggle("on",top&&a.getAttribute("href")==="#"+top.id));
 }
