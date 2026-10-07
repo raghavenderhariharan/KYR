@@ -298,7 +298,7 @@ a{color:var(--purple)}
 .legal{font:400 .74rem/1.5 var(--f-mono);color:color-mix(in srgb,var(--deep-fg) 55%,var(--deep));margin-top:48px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 
 /* ---------- presenter nav ---------- */
-.pnav{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:50;display:flex;gap:10px}
+.pnav{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:50;display:flex;gap:10px}
 .pnav button{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);color:var(--fg);cursor:pointer;display:grid;place-items:center;padding:0;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:background .3s,border-color .3s}
 .pnav button svg{width:18px;height:18px}
 .pnav button:hover{background:var(--purple);border-color:var(--purple);color:#fff}
