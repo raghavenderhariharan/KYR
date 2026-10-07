@@ -19,7 +19,7 @@
   --grad-loop:linear-gradient(100deg,#ED0C0C,#C2137F 17%,#7B45F0 33%,#460DAF 50%,#7B45F0 67%,#C2137F 83%,#ED0C0C);
   --grad6:linear-gradient(90deg,var(--s1),var(--s2),var(--s3),var(--s4),var(--s5),var(--s6));
   --deep:#1A0848; --deep-fg:#F5F1FF;
-  --glass:rgba(255,255,255,.04); --hair:rgba(255,255,255,.06); --btn-line:rgba(255,255,255,.22); --glow-op:1; --top-glow:rgba(123,69,240,.25);
+  --glass:rgba(255,255,255,.04); --hair:rgba(255,255,255,.06); --btn-line:rgba(255,255,255,.22); --glow-op:1; --top-glow:transparent;
   color-scheme:dark;
   --f-display:"Source Sans 3","Source Sans Pro","Segoe UI","Helvetica Neue",Arial,sans-serif;
   --f-body:"IBM Plex Sans","Segoe UI",system-ui,-apple-system,sans-serif;
@@ -121,6 +121,19 @@ a{color:var(--purple)}
   radial-gradient(30% 34% at 40% 80%,color-mix(in srgb,var(--teal) 12%,transparent),transparent 70%);
   filter:blur(10px);animation:drift 24s ease-in-out infinite alternate}
 @keyframes drift{to{transform:translate(-4%,3%) rotate(4deg) scale(1.05)}}
+/* Dark mode: every section shares the first page's background. The hero glow is fixed to the screen,
+   so each screenful looks like the opening one; per-section glows are used only in light mode. */
+.screen-glow{display:none}
+:root:not([data-bg="light"]) .screen-glow{display:block;position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.screen-glow::before{content:"";position:absolute;inset:0;background:radial-gradient(70% 55% at 50% 0%,rgba(123,69,240,.22),transparent 70%)}
+.screen-glow::after{content:"";position:absolute;top:-12vh;right:-10vw;left:35vw;height:120vh;background:
+  radial-gradient(38% 42% at 30% 40%,color-mix(in srgb,var(--red) 30%,transparent),transparent 70%),
+  radial-gradient(36% 40% at 62% 30%,color-mix(in srgb,var(--magenta) 18%,transparent),transparent 70%),
+  radial-gradient(42% 46% at 70% 70%,color-mix(in srgb,var(--violet) 30%,transparent),transparent 70%),
+  radial-gradient(30% 34% at 40% 80%,color-mix(in srgb,var(--teal) 12%,transparent),transparent 70%);
+  filter:blur(10px);animation:drift 24s ease-in-out infinite alternate}
+:root:not([data-bg="light"]) main>section::before{display:none}
+:root:not([data-bg="light"]) .close{background:transparent}
 /* transform machine */
 .machine{position:relative;display:grid;grid-template-columns:1fr 46px 1.1fr;align-items:center;gap:0}
 .machine>*{min-width:0}
@@ -359,6 +372,7 @@ dialog.lb button{position:absolute;right:10px;top:10px;border:0;border-radius:8p
   </div>
 </header>
 
+<div class="screen-glow" aria-hidden="true"></div>
 <main id="top">
 <!-- ================= HERO ================= -->
 <section class="hero" data-nav="Know Your Reports">
