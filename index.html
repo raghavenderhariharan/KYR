@@ -56,7 +56,8 @@ a{color:var(--purple)}
 @keyframes sheen{to{background-position:200% 0}}
 .topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .topbar .wrap{display:flex;align-items:center;gap:20px;height:56px}
-.brand{font:800 1.3rem/1 var(--f-display);color:var(--red);letter-spacing:-.03em;text-decoration:none}
+.brand{font:italic 700 1.15rem/1 Arial,"Helvetica Neue",Helvetica,sans-serif;color:#ED0C0C;background:#fff;padding:5px 9px 6px;border-radius:6px;letter-spacing:-.01em;text-decoration:none}
+.logo-mark{position:absolute;right:clamp(16px,3vw,32px);bottom:clamp(14px,2vw,24px);z-index:2;font:italic 700 1rem/1 Arial,"Helvetica Neue",Helvetica,sans-serif;color:#ED0C0C;background:#fff;padding:5px 9px 6px;border-radius:6px;letter-spacing:-.01em;box-shadow:0 6px 16px -6px rgba(0,0,0,.5);pointer-events:none;user-select:none}
 .brand-sub{font:500 .8rem/1 var(--f-mono);color:var(--muted);border-left:1px solid var(--line);padding-left:14px}
 .toplinks{margin-left:auto;display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
 .toplinks a{font:500 .82rem/1 var(--f-body);color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:6px;white-space:nowrap}
@@ -183,13 +184,15 @@ a{color:var(--purple)}
 .progress a.on{color:var(--c)}
 .progress a.on .d{border-color:var(--c);background:var(--c);box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 22%,transparent)}
 #prog a:nth-child(1){--c:var(--s1)}#prog a:nth-child(2){--c:var(--s2)}#prog a:nth-child(3){--c:var(--s3)}#prog a:nth-child(4){--c:var(--s4)}#prog a:nth-child(5){--c:var(--s5)}#prog a:nth-child(6){--c:var(--s6)}
-.panel{--c:var(--purple);display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.5fr);gap:clamp(24px,4vw,56px);align-items:start;padding-block:clamp(48px,7vw,88px);border-bottom:1px dashed var(--line);scroll-margin-top:120px}
+.panel{--c:var(--purple);display:grid;grid-template-columns:minmax(0,.62fr) minmax(0,1.9fr);gap:clamp(24px,3vw,44px);align-items:start;padding-block:clamp(48px,7vw,88px);border-bottom:1px dashed var(--line);scroll-margin-top:120px}
 .panel:last-child{border-bottom:0}
-.panel.flip{grid-template-columns:minmax(0,1.5fr) minmax(0,.82fr)}
+.panel.flip{grid-template-columns:minmax(0,1.9fr) minmax(0,.62fr)}
+.wrap.wide{max-width:1480px}
+.copy .points li{font-size:.92rem}
 .panel.flip .copy{order:2}
-@media (max-width:940px){.panel,.panel.flip{grid-template-columns:1fr}.panel.flip .copy{order:0}}
+@media (max-width:1080px){.panel,.panel.flip{grid-template-columns:1fr}.panel.flip .copy{order:0}}
 .copy{display:grid;gap:14px;align-content:start;position:sticky;top:140px}
-@media (max-width:940px){.copy{position:static}}
+@media (max-width:1080px){.copy{position:static}}
 .stepno{font:500 .78rem/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--c);display:flex;align-items:center;gap:10px}
 .stepno .bar{display:inline-flex;gap:3px}
 .stepno .bar i{width:14px;height:4px;border-radius:2px;background:var(--line)}
@@ -257,8 +260,8 @@ a{color:var(--purple)}
 .stat .l{font:500 .74rem/1 var(--f-mono);color:var(--muted);margin-top:8px;letter-spacing:.06em;text-transform:uppercase}
 .stat.ok .v{color:var(--green)}.stat.bad .v{color:var(--fail)}
 @media (max-width:760px){.stats{grid-template-columns:1fr 1fr}}
-.stats-grid{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.5fr);gap:clamp(24px,4vw,48px);align-items:start}
-@media (max-width:940px){.stats-grid{grid-template-columns:1fr}}
+.stats-grid{display:grid;grid-template-columns:minmax(0,.62fr) minmax(0,1.9fr);gap:clamp(24px,4vw,48px);align-items:start}
+@media (max-width:1080px){.stats-grid{grid-template-columns:1fr}}
 .donut-wrap{display:flex;align-items:center;gap:18px;margin-top:6px}
 .donut{width:120px;height:120px;flex:none}
 .donut circle{fill:none;stroke-width:16}
@@ -294,7 +297,7 @@ a{color:var(--purple)}
 .legal{font:400 .74rem/1.5 var(--f-mono);color:color-mix(in srgb,var(--deep-fg) 55%,var(--deep));margin-top:48px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 
 /* ---------- presenter nav ---------- */
-.pnav{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:50;display:flex;align-items:center;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px;box-shadow:var(--shadow)}
+.pnav{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:50;display:flex;align-items:center;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px;box-shadow:var(--shadow)}
 .pnav button{width:34px;height:34px;border-radius:50%;border:0;background:var(--sunk);color:var(--fg);cursor:pointer;font:600 1rem/1 var(--f-body);display:grid;place-items:center}
 .pnav button:hover{background:var(--purple);color:#fff}
 .pnav{border-color:color-mix(in srgb,var(--purple) 30%,var(--line))}
@@ -438,7 +441,7 @@ dialog.lb button{position:absolute;right:10px;top:10px;border:0;border-radius:8p
       <a href="#s6" data-k="s6"><span class="d"></span>6 Summary</a>
     </div>
   </div>
-  <div class="wrap" id="panels"></div>
+  <div class="wrap wide" id="panels"></div>
 </section>
 
 <!-- ================= PIPELINE ================= -->
@@ -466,7 +469,7 @@ dialog.lb button{position:absolute;right:10px;top:10px;border:0;border-radius:8p
 
 <!-- ================= RESULTS ================= -->
 <section class="walk" id="results" data-nav="Results">
-  <div class="wrap">
+  <div class="wrap wide">
     <div class="sec-head">
       <span class="eyebrow">Observability</span>
       <h2>The result: every run, tracked</h2>
@@ -478,7 +481,7 @@ dialog.lb button{position:absolute;right:10px;top:10px;border:0;border-radius:8p
       <div class="stat bad"><div class="v" data-to="42">42</div><div class="l">Failed</div></div>
       <div class="stat rec"><div class="v" data-to="11831">11,831</div><div class="l">Records processed</div></div>
     </div>
-    <div class="stats-grid" id="statsPanel"></div>
+    <div class="stats-grid" id="statsPanel" style="max-width:1400px"></div>
   </div>
 </section>
 
@@ -704,6 +707,9 @@ if(!reduce){
     }
   })();
 }
+
+/* Infor wordmark in the bottom-right corner of every section */
+document.querySelectorAll("main>section").forEach(sec=>{const m=document.createElement("span");m.className="logo-mark";m.setAttribute("aria-hidden","true");m.textContent="infor";sec.appendChild(m)});
 
 /* presenter navigation: arrow keys / buttons jump section to section */
 const secs=[...document.querySelectorAll("section[data-nav], .panel")].sort((a,b)=>a.offsetTop-b.offsetTop);
