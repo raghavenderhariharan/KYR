@@ -1,7 +1,7 @@
 <title>Know Your Reports</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* Look: one deep Infor-purple ground throughout (same as the closing section), each section with its own drifting color glow.
    Layout: a raw report on the left of every idea becomes structured, indexed data on the right.
@@ -20,7 +20,7 @@
   --grad6:linear-gradient(90deg,var(--s1),var(--s2),var(--s3),var(--s4),var(--s5),var(--s6));
   --deep:#1A0848; --deep-fg:#F5F1FF;
   color-scheme:dark;
-  --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --f-display:"Source Sans 3","Source Sans Pro","Segoe UI","Helvetica Neue",Arial,sans-serif;
   --f-body:"IBM Plex Sans","Segoe UI",system-ui,-apple-system,sans-serif;
   --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
 }
@@ -29,8 +29,8 @@
 html{scroll-behavior:smooth}
 body{background:var(--bg) radial-gradient(60% 40% at 50% 0%,rgba(123,69,240,.25),transparent 70%) no-repeat;color:var(--fg);font:400 1rem/1.6 var(--f-body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 .wrap{max-width:1180px;margin-inline:auto;padding-inline:clamp(16px,4vw,40px)}
-h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.08;letter-spacing:-.02em}
-h2{font-size:clamp(1.9rem,4.2vw,3rem);font-weight:800}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.1;letter-spacing:-.01em}
+h2{font-size:clamp(1.9rem,4.2vw,3rem);font-weight:700}
 h3{font-size:1.25rem;font-weight:700;letter-spacing:-.01em}
 p{margin:0}
 .eyebrow{font:500 .75rem/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--purple);display:inline-flex;align-items:center;gap:.6em}
@@ -57,8 +57,8 @@ a{color:var(--purple)}
 .topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .topbar .wrap{display:flex;align-items:center;gap:20px;height:56px}
 .brand{display:inline-flex;line-height:0;border-radius:4px;overflow:hidden;text-decoration:none}
-.brand img{height:30px;width:auto;display:block}
-.logo-mark{position:absolute;right:clamp(16px,3vw,32px);bottom:clamp(14px,2vw,24px);z-index:2;width:64px;height:auto;border-radius:4px;box-shadow:0 6px 16px -6px rgba(0,0,0,.55);pointer-events:none;user-select:none}
+.brand img{height:26px;width:auto;display:block}
+.logo-mark{position:absolute;right:clamp(16px,3vw,32px);bottom:clamp(14px,2vw,24px);z-index:2;width:62px;height:auto;pointer-events:none;user-select:none}
 .brand-sub{font:500 .8rem/1 var(--f-mono);color:var(--muted);border-left:1px solid var(--line);padding-left:14px}
 .toplinks{margin-left:auto;display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
 .toplinks a{font:500 .82rem/1 var(--f-body);color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:6px;white-space:nowrap}
@@ -75,7 +75,7 @@ a{color:var(--purple)}
 .chip.red{color:var(--red);border-color:color-mix(in srgb,var(--red) 40%,var(--line))}
 .chip.pu{color:var(--purple);border-color:color-mix(in srgb,var(--purple) 40%,var(--line))}
 .chip.mg{color:var(--magenta);border-color:color-mix(in srgb,var(--magenta) 40%,var(--line))}
-.hero h1{font-size:clamp(2.9rem,7.4vw,5.6rem);font-weight:800;letter-spacing:-.045em}
+.hero h1{font-size:clamp(2.9rem,7.4vw,5.6rem);font-weight:700;letter-spacing:-.02em}
 .hero h1 .k{display:inline-block;animation:rise 1.4s cubic-bezier(.2,.7,.2,1) both}
 .hero h1 .k:nth-child(2){animation-delay:.14s}.hero h1 .k:nth-child(3){animation-delay:.28s;background:var(--grad);background-size:160% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:.06em}
 @keyframes rise{from{transform:translateY(.35em);opacity:.25}to{transform:none;opacity:1}}
@@ -158,9 +158,9 @@ a{color:var(--purple)}
 .rail.pre .track i{transform:scaleX(0)}
 .stepcard{position:relative;z-index:1;display:grid;gap:10px;align-content:start;text-decoration:none;color:inherit;padding:0 4px 8px;transition:transform .25s}
 .stepcard:hover{transform:translateY(-4px)}
-.badge{width:70px;height:70px;border-radius:20px;display:grid;place-items:center;background:var(--c);box-shadow:0 0 0 6px var(--bg),0 12px 24px -10px var(--c);position:relative;transition:transform .8s cubic-bezier(.3,1.6,.5,1)}
+.badge{width:70px;height:70px;border-radius:20px;display:grid;place-items:center;background:var(--c);box-shadow:0 12px 24px -10px var(--c);position:relative;transition:transform .8s cubic-bezier(.3,1.6,.5,1)}
 .badge img{width:34px;height:34px}
-.badge .n{position:absolute;right:-8px;top:-8px;width:24px;height:24px;border-radius:50%;background:var(--fg);color:var(--bg);font:600 .74rem/24px var(--f-mono);text-align:center;box-shadow:0 0 0 3px var(--bg)}
+.badge .n{position:absolute;right:-8px;top:-8px;width:24px;height:24px;border-radius:50%;background:var(--fg);color:var(--bg);font:600 .74rem/24px var(--f-mono);text-align:center;box-shadow:0 4px 10px -2px rgba(0,0,0,.45)}
 .stepcard:hover .badge{transform:rotate(-6deg) scale(1.05)}
 .rail.pre .badge{transform:scale(.6)}
 .stepcard h3{font-size:1.05rem}
@@ -319,7 +319,7 @@ dialog.lb button{position:absolute;right:10px;top:10px;border:0;border-radius:8p
 
 <header class="topbar">
   <div class="wrap">
-    <a class="brand" href="#top"><img src="assets/infor-logo-white.png" width="72" height="34" alt="Infor"></a>
+    <a class="brand" href="#top"><img src="assets/infor-logo-transparent.png" width="74" height="30" alt="Infor"></a>
     <span class="brand-sub">Know Your Reports</span>
     <nav class="toplinks" aria-label="Sections">
       <a href="#value">Why KYR</a>
@@ -710,7 +710,7 @@ if(!reduce){
 }
 
 /* Infor wordmark in the bottom-right corner of every section */
-document.querySelectorAll("main>section").forEach(sec=>{const m=document.createElement("img");m.className="logo-mark";m.src="assets/infor-logo-white.png";m.alt="";m.width=64;m.height=30;sec.appendChild(m)});
+document.querySelectorAll("main>section").forEach(sec=>{const m=document.createElement("img");m.className="logo-mark";m.src="assets/infor-logo-transparent.png";m.alt="";m.width=62;m.height=25;sec.appendChild(m)});
 
 /* presenter navigation: arrow keys / buttons jump section to section */
 const secs=[...document.querySelectorAll("section[data-nav], .panel")].sort((a,b)=>a.offsetTop-b.offsetTop);
