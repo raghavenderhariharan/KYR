@@ -101,11 +101,6 @@ a{color:var(--purple)}
 @keyframes rise{from{transform:translateY(.35em);opacity:.25}to{transform:none;opacity:1}}
 .hero .tagline{font:600 clamp(1.15rem,2.2vw,1.5rem)/1.35 var(--f-display);margin-top:18px;letter-spacing:-.01em}
 .hero .lede{margin-top:14px}
-.promise{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
-.promise span{font:500 .88rem/1 var(--f-body);padding:9px 12px;border-radius:8px;background:var(--surface);border:1px solid var(--line);display:inline-flex;align-items:center;gap:8px}
-.promise span{border-color:color-mix(in srgb,var(--c) 35%,var(--line))!important}
-.promise span i{width:8px;height:8px;border-radius:2px;background:var(--c);display:inline-block}
-.promise span:nth-child(1){--c:var(--s5)}.promise span:nth-child(2){--c:var(--s2)}.promise span:nth-child(3){--c:var(--s3)}.promise span:nth-child(4){--c:var(--s6)}
 .hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
 .btn{font:600 .95rem/1 var(--f-body);padding:14px 18px;border-radius:10px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;border:1px solid transparent;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s}
 .btn.primary{background:var(--red);color:#fff}
@@ -368,9 +363,6 @@ dialog.lb button{position:absolute;right:10px;top:10px;border:0;border-radius:8p
       <h1><span class="k">Know</span> <span class="k">Your</span> <span class="k">Reports</span></h1>
       <p class="tagline">Converting a report into indexed data.</p>
       <p class="lede">An AI-guided wizard that turns a raw report file into a validated, role-secured, conversational report definition, ready for BaaS. Your ERP already produces the report. Know Your Reports makes it something your people can simply ask.</p>
-      <div class="promise" aria-label="What every report becomes">
-        <span><i></i>Validated</span><span><i></i>Role-secured</span><span><i></i>Conversational</span><span><i></i>Ready for BaaS</span>
-      </div>
       <div class="hero-cta">
         <a class="btn primary" href="#steps">See the six steps <span aria-hidden="true">→</span></a>
         <a class="btn ghost" href="#walkthrough">Walk through the demo</a>
