@@ -56,8 +56,9 @@ a{color:var(--purple)}
 @keyframes sheen{to{background-position:200% 0}}
 .topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .topbar .wrap{display:flex;align-items:center;gap:20px;height:56px}
-.brand{font:italic 700 1.15rem/1 Arial,"Helvetica Neue",Helvetica,sans-serif;color:#ED0C0C;background:#fff;padding:5px 9px 6px;border-radius:6px;letter-spacing:-.01em;text-decoration:none}
-.logo-mark{position:absolute;right:clamp(16px,3vw,32px);bottom:clamp(14px,2vw,24px);z-index:2;font:italic 700 1rem/1 Arial,"Helvetica Neue",Helvetica,sans-serif;color:#ED0C0C;background:#fff;padding:5px 9px 6px;border-radius:6px;letter-spacing:-.01em;box-shadow:0 6px 16px -6px rgba(0,0,0,.5);pointer-events:none;user-select:none}
+.brand{display:inline-flex;line-height:0;border-radius:4px;overflow:hidden;text-decoration:none}
+.brand img{height:30px;width:auto;display:block}
+.logo-mark{position:absolute;right:clamp(16px,3vw,32px);bottom:clamp(14px,2vw,24px);z-index:2;width:64px;height:auto;border-radius:4px;box-shadow:0 6px 16px -6px rgba(0,0,0,.55);pointer-events:none;user-select:none}
 .brand-sub{font:500 .8rem/1 var(--f-mono);color:var(--muted);border-left:1px solid var(--line);padding-left:14px}
 .toplinks{margin-left:auto;display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
 .toplinks a{font:500 .82rem/1 var(--f-body);color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:6px;white-space:nowrap}
@@ -318,7 +319,7 @@ dialog.lb button{position:absolute;right:10px;top:10px;border:0;border-radius:8p
 
 <header class="topbar">
   <div class="wrap">
-    <a class="brand" href="#top" aria-label="Infor">infor</a>
+    <a class="brand" href="#top"><img src="assets/infor-logo.png" width="72" height="34" alt="Infor"></a>
     <span class="brand-sub">Know Your Reports</span>
     <nav class="toplinks" aria-label="Sections">
       <a href="#value">Why KYR</a>
@@ -709,7 +710,7 @@ if(!reduce){
 }
 
 /* Infor wordmark in the bottom-right corner of every section */
-document.querySelectorAll("main>section").forEach(sec=>{const m=document.createElement("span");m.className="logo-mark";m.setAttribute("aria-hidden","true");m.textContent="infor";sec.appendChild(m)});
+document.querySelectorAll("main>section").forEach(sec=>{const m=document.createElement("img");m.className="logo-mark";m.src="assets/infor-logo.png";m.alt="";m.width=64;m.height=30;sec.appendChild(m)});
 
 /* presenter navigation: arrow keys / buttons jump section to section */
 const secs=[...document.querySelectorAll("section[data-nav], .panel")].sort((a,b)=>a.offsetTop-b.offsetTop);
