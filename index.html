@@ -1,0 +1,698 @@
+<title>Know Your Reports</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a raw report on the left of every idea becomes structured, indexed data on the right.
+   Sections read like pages of a walkthrough; screenshots carry live spotlights tied to each talking point. */
+:root{
+  --bg:#F5F6F8; --surface:#FFFFFF; --sunk:#ECEEF2; --fg:#101826; --muted:#5A6476; --line:#D9DDE4;
+  --red:#D7261E; --red-soft:#FBE4E2; --blue:#1F5FD6; --blue-soft:#E3ECFC; --green:#16905A; --green-soft:#DFF3E8; --fail:#C8231C;
+  --paper:#FFFDF7; --paper-ink:#3A3F48; --spot:rgba(16,24,38,.58);
+  --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --shadow:0 1px 2px rgba(16,24,38,.06),0 12px 32px -12px rgba(16,24,38,.18);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0B111C; --surface:#131B2A; --sunk:#0F1622; --fg:#E7EBF2; --muted:#9AA4B6; --line:#263147;
+  --red:#F0483F; --red-soft:#3A1917; --blue:#6E9BFF; --blue-soft:#17264A; --green:#3CC787; --green-soft:#12301F; --fail:#F0605A;
+  --paper:#1A2232; --paper-ink:#C9D0DC; --spot:rgba(3,6,12,.66);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 16px 36px -14px rgba(0,0,0,.6); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0B111C; --surface:#131B2A; --sunk:#0F1622; --fg:#E7EBF2; --muted:#9AA4B6; --line:#263147;
+  --red:#F0483F; --red-soft:#3A1917; --blue:#6E9BFF; --blue-soft:#17264A; --green:#3CC787; --green-soft:#12301F; --fail:#F0605A;
+  --paper:#1A2232; --paper-ink:#C9D0DC; --spot:rgba(3,6,12,.66);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 16px 36px -14px rgba(0,0,0,.6); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font:400 1rem/1.6 var(--f-body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:1180px;margin-inline:auto;padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.08;letter-spacing:-.02em}
+h2{font-size:clamp(1.9rem,4.2vw,3rem);font-weight:800}
+h3{font-size:1.25rem;font-weight:700;letter-spacing:-.01em}
+p{margin:0}
+.eyebrow{font:500 .75rem/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--red);display:inline-flex;align-items:center;gap:.6em}
+.eyebrow::before{content:"";width:22px;height:2px;background:currentColor}
+.lede{color:var(--muted);font-size:1.12rem;max-width:62ch}
+code,.mono{font-family:var(--f-mono);font-size:.92em}
+section{padding-block:clamp(64px,9vw,120px);scroll-margin-top:12px}
+.sec-head{display:grid;gap:16px;margin-bottom:clamp(32px,5vw,56px)}
+a{color:var(--blue)}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
+
+/* ---------- top bar ---------- */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;gap:20px;height:56px}
+.brand{font:800 1.3rem/1 var(--f-display);color:var(--red);letter-spacing:-.03em;text-decoration:none}
+.brand-sub{font:500 .8rem/1 var(--f-mono);color:var(--muted);border-left:1px solid var(--line);padding-left:14px}
+.toplinks{margin-left:auto;display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.toplinks a{font:500 .82rem/1 var(--f-body);color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:6px;white-space:nowrap}
+.toplinks a:hover,.toplinks a.on{color:var(--fg);background:var(--sunk)}
+@media (max-width:860px){.toplinks{display:none}}
+
+/* ---------- hero ---------- */
+.hero{padding-block:clamp(40px,7vw,88px) clamp(56px,8vw,96px)}
+.hero-grid{display:grid;grid-template-columns:1fr 1.08fr;gap:clamp(28px,5vw,64px);align-items:center}
+.hero-grid>*{min-width:0}
+@media (max-width:940px){.hero-grid{grid-template-columns:1fr}}
+.demo-tag{display:inline-flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.chip{font:500 .72rem/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;padding:7px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted);background:var(--surface)}
+.chip.red{color:var(--red);border-color:color-mix(in srgb,var(--red) 40%,var(--line))}
+.hero h1{font-size:clamp(2.9rem,7.4vw,5.6rem);font-weight:800;letter-spacing:-.045em}
+.hero h1 .k{display:inline-block;animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+.hero h1 .k:nth-child(2){animation-delay:.08s}.hero h1 .k:nth-child(3){animation-delay:.16s;color:var(--red)}
+@keyframes rise{from{transform:translateY(.35em);opacity:.25}to{transform:none;opacity:1}}
+.hero .tagline{font:600 clamp(1.15rem,2.2vw,1.5rem)/1.35 var(--f-display);margin-top:18px;letter-spacing:-.01em}
+.hero .lede{margin-top:14px}
+.promise{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.promise span{font:500 .88rem/1 var(--f-body);padding:9px 12px;border-radius:8px;background:var(--surface);border:1px solid var(--line);display:inline-flex;align-items:center;gap:8px}
+.promise span i{width:8px;height:8px;border-radius:2px;background:var(--red);display:inline-block}
+.promise span:nth-child(2) i{background:var(--blue)}.promise span:nth-child(3) i{background:var(--green)}.promise span:nth-child(4) i{background:var(--fg)}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.btn{font:600 .95rem/1 var(--f-body);padding:14px 18px;border-radius:10px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;border:1px solid transparent;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s}
+.btn.primary{background:var(--red);color:#fff}
+.btn.primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px -10px var(--red)}
+.btn.ghost{border-color:var(--line);color:var(--fg);background:var(--surface)}
+.btn.ghost:hover{border-color:var(--fg)}
+.foot-note{font:400 .78rem/1.4 var(--f-mono);color:var(--muted);margin-top:22px}
+
+/* transform machine */
+.machine{position:relative;display:grid;grid-template-columns:1fr 46px 1.1fr;align-items:center;gap:0}
+.machine>*{min-width:0}
+@media (max-width:560px){.machine{grid-template-columns:1fr;gap:14px}.conduit{transform:rotate(90deg);height:40px;justify-self:center}}
+.paper{position:relative;background:var(--paper);color:var(--paper-ink);border:1px solid var(--line);border-radius:6px;padding:16px 14px 18px;font:400 .62rem/1.75 var(--f-mono);box-shadow:var(--shadow);overflow:hidden;transform:rotate(-1.4deg);padding-bottom:30px}
+.paper .ph{display:flex;justify-content:space-between;font-weight:500;font-size:.66rem;border-bottom:1px dashed var(--line);padding-bottom:6px;margin-bottom:6px}
+.paper .ln{white-space:nowrap;overflow:hidden;text-overflow:clip}
+.paper .ln b{font-weight:500;color:var(--fg)}
+.paper .file{position:absolute;right:10px;bottom:8px;font-size:.6rem;color:var(--muted)}
+.scan{position:absolute;left:0;right:0;height:42px;top:-50px;background:linear-gradient(180deg,transparent,color-mix(in srgb,var(--red) 22%,transparent) 70%,var(--red) 96%,transparent);animation:scan 4.8s cubic-bezier(.45,.05,.55,.95) infinite;pointer-events:none}
+@keyframes scan{0%{top:-50px}55%{top:100%}100%{top:100%}}
+.conduit{height:100%;display:grid;place-items:center;position:relative}
+.conduit svg{width:46px;height:60px;overflow:visible}
+.conduit .flow{stroke:var(--red);stroke-width:2;fill:none;stroke-dasharray:4 6;animation:dash 1s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-20}}
+.index{background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
+.index .ih{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid var(--line);font:500 .7rem/1 var(--f-mono);color:var(--muted)}
+.index .ih b{color:var(--green);font-weight:500;display:inline-flex;align-items:center;gap:6px}
+.index .ih b::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.field{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:7px 12px;border-bottom:1px solid var(--line);font:400 .74rem/1.2 var(--f-mono);animation:land 4.8s cubic-bezier(.2,.7,.2,1) infinite both}
+.field:last-child{border-bottom:0}
+.field span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.type{font-size:.62rem;padding:3px 7px;border-radius:5px;letter-spacing:.04em}
+.t-kw{background:var(--blue-soft);color:var(--blue)}.t-dt{background:var(--red-soft);color:var(--red)}.t-db{background:var(--green-soft);color:var(--green)}.t-tx{background:var(--sunk);color:var(--muted)}.t-bo{background:var(--fg);color:var(--bg)}
+@keyframes land{0%,8%{transform:translateX(-14px);opacity:.35;background:color-mix(in srgb,var(--red) 10%,transparent)}22%{transform:none;opacity:1;background:transparent}100%{transform:none;opacity:1}}
+.ask{margin-top:14px;background:var(--fg);color:var(--bg);border-radius:14px 14px 14px 4px;padding:12px 14px;font:500 .86rem/1.45 var(--f-body);position:relative;min-height:3.9em}
+.ask small{display:block;font:500 .64rem/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;opacity:.6;margin-bottom:6px}
+.ask .caret{display:inline-block;width:2px;height:1em;background:currentColor;vertical-align:-2px;margin-left:2px;animation:pulse 1s steps(1) infinite}
+.ask-note{font:400 .7rem/1.4 var(--f-mono);color:var(--muted);margin-top:8px}
+
+/* ---------- value strip ---------- */
+.why{background:var(--surface);border-block:1px solid var(--line)}
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.why-grid>div{padding:26px 22px;border-right:1px solid var(--line);display:grid;gap:10px;align-content:start;min-width:0;transition:background .3s}
+.why-grid>div:last-child{border-right:0}
+.why-grid>div:hover{background:var(--sunk)}
+.why-grid .word{font:800 1.6rem/1 var(--f-display);letter-spacing:-.03em}
+.why-grid .from{font:500 .7rem/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.why-grid p{color:var(--muted);font-size:.95rem}
+@media (max-width:900px){.why-grid{grid-template-columns:1fr 1fr}.why-grid>div:nth-child(2){border-right:0}.why-grid>div:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+@media (max-width:520px){.why-grid{grid-template-columns:1fr}.why-grid>div{border-right:0;border-bottom:1px solid var(--line)}.why-grid>div:last-child{border-bottom:0}}
+.who{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:28px;color:var(--muted);font-size:.95rem}
+.who b{color:var(--fg);font-weight:600}
+.who .p{padding:6px 11px;border-radius:999px;background:var(--sunk);font-size:.85rem;color:var(--fg)}
+
+/* ---------- six steps ---------- */
+.rail{position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.rail>*{min-width:0}
+.rail .track{position:absolute;left:4%;right:4%;top:35px;height:2px;background:var(--line);z-index:0}
+.rail .track i{position:absolute;inset:0;background:var(--blue);transform-origin:left;transform:scaleX(1);transition:transform 1.8s cubic-bezier(.6,.1,.2,1)}
+.rail.pre .track i{transform:scaleX(0)}
+.stepcard{position:relative;z-index:1;display:grid;gap:10px;align-content:start;text-decoration:none;color:inherit;padding:0 4px 8px;transition:transform .25s}
+.stepcard:hover{transform:translateY(-4px)}
+.badge{width:70px;height:70px;border-radius:20px;display:grid;place-items:center;background:var(--blue);box-shadow:0 0 0 6px var(--bg);position:relative;transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+.badge img{width:34px;height:34px}
+.badge .n{position:absolute;right:-8px;top:-8px;width:24px;height:24px;border-radius:50%;background:var(--red);color:#fff;font:600 .74rem/24px var(--f-mono);text-align:center;box-shadow:0 0 0 3px var(--bg)}
+.stepcard:hover .badge{transform:rotate(-6deg) scale(1.05)}
+.rail.pre .badge{transform:scale(.6)}
+.stepcard h3{font-size:1.05rem}
+.stepcard p{color:var(--muted);font-size:.88rem;line-height:1.5}
+.ai-note{margin-top:34px;display:flex;gap:14px;align-items:center;padding:16px 18px;border-radius:12px;background:var(--blue-soft);color:var(--fg);font-size:.98rem}
+.ai-note .tog{flex:none;width:40px;height:22px;border-radius:999px;background:var(--blue);position:relative}
+.ai-note .tog::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;animation:toggle 3s ease-in-out infinite}
+@keyframes toggle{0%,40%{transform:none}50%,90%{transform:translateX(18px)}}
+@media (max-width:980px){.rail{grid-template-columns:repeat(3,1fr);row-gap:30px}.rail .track{display:none}}
+@media (max-width:520px){.rail{grid-template-columns:1fr 1fr}}
+
+/* ---------- step walkthrough ---------- */
+.walk{background:var(--sunk);border-block:1px solid var(--line)}
+.progress{position:sticky;top:calc(env(safe-area-inset-top,0px) + 56px);z-index:30;background:color-mix(in srgb,var(--sunk) 90%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin-bottom:8px}
+.progress .wrap{display:flex;gap:6px;padding-block:10px;overflow-x:auto;scrollbar-width:none}
+.progress a{flex:1 0 auto;display:flex;align-items:center;gap:8px;font:500 .78rem/1 var(--f-body);color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:8px;white-space:nowrap;position:relative}
+.progress a .d{width:10px;height:10px;border-radius:50%;border:2px solid var(--line);background:var(--surface);transition:.3s}
+.progress a.done .d{background:var(--blue);border-color:var(--blue)}
+.progress a.on{color:var(--fg);background:var(--surface)}
+.progress a.on .d{border-color:var(--blue);box-shadow:0 0 0 4px var(--blue-soft)}
+.panel{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.5fr);gap:clamp(24px,4vw,56px);align-items:start;padding-block:clamp(48px,7vw,88px);border-bottom:1px dashed var(--line);scroll-margin-top:120px}
+.panel:last-child{border-bottom:0}
+.panel.flip{grid-template-columns:minmax(0,1.5fr) minmax(0,.82fr)}
+.panel.flip .copy{order:2}
+@media (max-width:940px){.panel,.panel.flip{grid-template-columns:1fr}.panel.flip .copy{order:0}}
+.copy{display:grid;gap:14px;align-content:start;position:sticky;top:140px}
+@media (max-width:940px){.copy{position:static}}
+.stepno{font:500 .78rem/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:10px}
+.stepno .bar{display:inline-flex;gap:3px}
+.stepno .bar i{width:14px;height:4px;border-radius:2px;background:var(--line)}
+.stepno .bar i.f{background:var(--blue)}
+.copy h3{font-size:clamp(1.5rem,2.6vw,2rem);font-weight:800;letter-spacing:-.025em}
+.copy .why-line{font-size:1rem;color:var(--fg);padding-left:14px;border-left:3px solid var(--red)}
+.points{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:6px}
+.points li{display:grid;grid-template-columns:26px 1fr;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;color:var(--muted);font-size:.95rem;line-height:1.5;transition:background .25s,color .25s;border:1px solid transparent}
+.points li .m{width:24px;height:24px;border-radius:7px;background:var(--surface);border:1px solid var(--line);font:600 .72rem/22px var(--f-mono);text-align:center;color:var(--muted);transition:.25s}
+.points li.on{background:var(--surface);color:var(--fg);border-color:var(--line);box-shadow:var(--shadow)}
+.points li.on .m{background:var(--red);border-color:var(--red);color:#fff}
+.points li:hover{color:var(--fg)}
+.points q{quotes:"“" "”";font-weight:600;color:var(--fg)}
+.tour{display:flex;align-items:center;gap:10px;font:500 .74rem/1 var(--f-mono);color:var(--muted);margin-top:4px}
+.tour button{white-space:nowrap;flex:none;font:inherit;color:var(--blue);background:none;border:1px solid var(--line);border-radius:999px;padding:6px 10px;cursor:pointer}
+
+.shot{position:relative;margin:0;border-radius:12px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}
+.shot .chrome{display:flex;align-items:center;gap:6px;padding:9px 12px;border-bottom:1px solid var(--line);font:500 .7rem/1 var(--f-mono);color:var(--muted)}
+.shot .chrome i{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.shot .chrome span{margin-left:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.shot .chrome .zoom{margin-left:auto;font:inherit;color:var(--blue);background:none;border:0;cursor:zoom-in;padding:2px 4px}
+.stage{position:relative;line-height:0;overflow:hidden;background:#fff}
+.stage img{width:100%;height:auto;display:block}
+.hs{position:absolute;border-radius:6px;pointer-events:none;opacity:0;transition:opacity .45s,box-shadow .45s;outline:2px solid var(--red);outline-offset:2px}
+.stage.spot .hs.on{opacity:1;box-shadow:0 0 0 2000px var(--spot)}
+.stage.spot .hs.on.multi{box-shadow:none}
+.stage .veil{display:none}
+.stage .hs.on.multi{background:color-mix(in srgb,var(--red) 16%,transparent)}
+.hs .tag{position:absolute;left:-2px;top:-26px;background:var(--red);color:#fff;font:600 .68rem/1 var(--f-mono);padding:5px 7px;border-radius:5px;line-height:1}
+.hs.below .tag{top:auto;bottom:-26px}
+.shot figcaption{padding:10px 12px;font:400 .76rem/1.4 var(--f-mono);color:var(--muted);border-top:1px solid var(--line)}
+.panel .shot{transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.panel.pre .shot{transform:translateY(24px) scale(.985)}
+
+/* ---------- pipeline ---------- */
+.pipe{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.pipe>*{min-width:0}
+.pipe .wire{position:absolute;left:10%;right:10%;top:44px;height:3px;background:var(--line);border-radius:2px;overflow:hidden}
+.pipe .wire i{position:absolute;top:0;bottom:0;width:18%;background:linear-gradient(90deg,transparent,var(--red),transparent);animation:packet 4s linear infinite}
+@keyframes packet{from{left:-18%}to{left:100%}}
+.node{position:relative;z-index:1;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 18px 22px;display:grid;gap:10px;align-content:start;transition:border-color .4s,transform .4s,box-shadow .4s}
+.node .ic{width:56px;height:56px;border-radius:16px;background:var(--fg);display:grid;place-items:center;transition:background .4s}
+.node .ic img{width:28px;height:28px}
+.node .k{font:500 .7rem/1 var(--f-mono);letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.node p{color:var(--muted);font-size:.92rem}
+.node.live{border-color:var(--red);transform:translateY(-6px);box-shadow:var(--shadow)}
+.node.live .ic{background:var(--red)}
+@media (max-width:900px){.pipe{grid-template-columns:1fr 1fr}.pipe .wire{display:none}}
+@media (max-width:520px){.pipe{grid-template-columns:1fr}}
+.loop-note{margin-top:28px;display:flex;align-items:center;gap:16px;padding:18px 20px;border:1px dashed var(--red);border-radius:12px;background:var(--red-soft)}
+.loop-note svg{flex:none;width:34px;height:34px;animation:spin 6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.freq{display:inline-flex;flex-wrap:wrap;max-width:100%;line-height:1.6;align-items:center;gap:4px 8px;margin-top:20px;font:500 .82rem/1 var(--f-mono);padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.freq b{color:var(--red)}
+
+/* ---------- stats ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;min-width:0}
+.stat .v{font:800 clamp(1.8rem,3.6vw,2.6rem)/1 var(--f-display);font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.stat .l{font:500 .74rem/1 var(--f-mono);color:var(--muted);margin-top:8px;letter-spacing:.06em;text-transform:uppercase}
+.stat.ok .v{color:var(--green)}.stat.bad .v{color:var(--fail)}
+@media (max-width:760px){.stats{grid-template-columns:1fr 1fr}}
+.stats-grid{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.5fr);gap:clamp(24px,4vw,48px);align-items:start}
+@media (max-width:940px){.stats-grid{grid-template-columns:1fr}}
+.donut-wrap{display:flex;align-items:center;gap:18px;margin-top:6px}
+.donut{width:120px;height:120px;flex:none}
+.donut circle{fill:none;stroke-width:16}
+.donut .bg{stroke:var(--fail)}
+.donut .fg{stroke:var(--green);stroke-linecap:butt;transition:stroke-dashoffset 1.6s cubic-bezier(.3,.7,.2,1);transform:rotate(-90deg);transform-origin:50% 50%}
+.donut text{fill:var(--fg);font:700 22px var(--f-display);text-anchor:middle}
+.legend{display:grid;gap:8px;font-size:.9rem}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:8px;vertical-align:0}
+
+/* ---------- close ---------- */
+.close{background:var(--fg);color:var(--bg)}
+.close .eyebrow{color:var(--red)}
+.close h2{color:var(--bg)}
+.close .lede{color:color-mix(in srgb,var(--bg) 70%,var(--fg))}
+.benefits{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:40px}
+.benefits>div{border:1px solid color-mix(in srgb,var(--bg) 18%,var(--fg));border-radius:14px;padding:22px;display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:start;min-width:0;transition:background .3s,transform .3s}
+.benefits>div:hover{background:color-mix(in srgb,var(--bg) 6%,var(--fg));transform:translateY(-3px)}
+.benefits .bi{width:44px;height:44px;border-radius:12px;background:var(--red);display:grid;place-items:center}
+.benefits .bi img{width:22px;height:22px}
+.benefits h3{color:var(--bg);font-size:1.12rem;margin-bottom:6px}
+.benefits p{color:color-mix(in srgb,var(--bg) 70%,var(--fg));font-size:.93rem}
+@media (max-width:760px){.benefits{grid-template-columns:1fr}}
+.ask-box{margin-top:44px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;padding:clamp(22px,4vw,36px);border-radius:16px;background:var(--red);color:#fff}
+.ask-box h3{font-size:clamp(1.4rem,2.8vw,2rem);font-weight:800;color:#fff}
+.ask-box p{opacity:.9;margin-top:8px;max-width:60ch}
+.ask-box ol{margin:14px 0 0;padding-left:1.2em;display:grid;gap:4px;opacity:.95}
+.ask-box .btn{background:#fff;color:#B01A13}
+@media (max-width:760px){.ask-box{grid-template-columns:1fr}}
+.legal{font:400 .74rem/1.5 var(--f-mono);color:color-mix(in srgb,var(--bg) 55%,var(--fg));margin-top:48px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+/* ---------- presenter nav ---------- */
+.pnav{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:50;display:flex;align-items:center;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px;box-shadow:var(--shadow)}
+.pnav button{width:34px;height:34px;border-radius:50%;border:0;background:var(--sunk);color:var(--fg);cursor:pointer;font:600 1rem/1 var(--f-body);display:grid;place-items:center}
+.pnav button:hover{background:var(--blue);color:#fff}
+.pnav .lbl{font:500 .72rem/1 var(--f-mono);color:var(--muted);padding-inline:8px;min-width:118px;text-align:center;white-space:nowrap}
+@media (max-width:520px){.pnav .lbl{display:none}}
+
+/* lightbox */
+dialog.lb{border:0;padding:0;background:transparent;max-width:min(96vw,1700px);width:100%}
+dialog.lb::backdrop{background:rgba(5,8,14,.82)}
+dialog.lb img{width:100%;height:auto;border-radius:10px;display:block}
+dialog.lb button{position:absolute;right:10px;top:10px;border:0;border-radius:8px;background:#fff;color:#111;font:600 .85rem/1 var(--f-body);padding:9px 12px;cursor:pointer}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Infor">infor</a>
+    <span class="brand-sub">Know Your Reports</span>
+    <nav class="toplinks" aria-label="Sections">
+      <a href="#value">Why KYR</a>
+      <a href="#steps">Six steps</a>
+      <a href="#walkthrough">Walkthrough</a>
+      <a href="#pipeline">Live pipeline</a>
+      <a href="#results">Results</a>
+      <a href="#next">Next step</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<!-- ================= HERO ================= -->
+<section class="hero" data-nav="Know Your Reports">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="demo-tag"><span class="chip red">Product demo</span><span class="chip">Conversational AI</span><span class="chip">Report automation</span></div>
+      <h1><span class="k">Know</span> <span class="k">Your</span> <span class="k">Reports</span></h1>
+      <p class="tagline">Converting a report into indexed data.</p>
+      <p class="lede">An AI-guided wizard that turns a raw report file into a validated, role-secured, conversational report definition, ready for BaaS. Your ERP already produces the report. Know Your Reports makes it something your people can simply ask.</p>
+      <div class="promise" aria-label="What every report becomes">
+        <span><i></i>Validated</span><span><i></i>Role-secured</span><span><i></i>Conversational</span><span><i></i>Ready for BaaS</span>
+      </div>
+      <div class="hero-cta">
+        <a class="btn primary" href="#steps">See the six steps <span aria-hidden="true">→</span></a>
+        <a class="btn ghost" href="#walkthrough">Walk through the demo</a>
+      </div>
+      <p class="foot-note">Report Configuration Wizard · Example used throughout: Inventory Audit Report</p>
+    </div>
+
+    <div aria-label="Animation: a raw inventory audit report is scanned and becomes typed, indexed fields you can query in plain language">
+      <div class="machine">
+        <div class="paper" aria-hidden="true">
+          <div class="scan"></div>
+          <div class="ph"><span>INVENTORY AUDIT</span><span>WHSE 07SC</span></div>
+          <div class="ln"><b>MIDWEST WHEEL CO</b>  PER 526</div>
+          <div class="ln">POSTED 2026-05-13</div>
+          <div class="ln">--------------------------------</div>
+          <div class="ln"><b>HL GA-155S-1</b>  SAME AS GA-155 WITH</div>
+          <div class="ln">  ON HAND    0  RSV    0  UNAV 0</div>
+          <div class="ln"><b>KS 66-18-250F-1</b> 18-22 GA .250 TAB</div>
+          <div class="ln">  ON HAND    0  RSV    0  UNAV 0</div>
+          <div class="ln"><b>P3 MXV281</b>  PEAK MAX VISION 28"</div>
+          <div class="ln">  ON HAND    0  RSV    0  UNAV 0</div>
+          <div class="ln">  SER/LOT  Y   NET AVL NEG  N</div>
+          <div class="ln">--------------------------------</div>
+          <div class="ln">  IC DISCREPANCIES UPDATED  N</div>
+          <div class="file">mail169755.pdf · 7.47 KB</div>
+        </div>
+        <div class="conduit" aria-hidden="true">
+          <svg viewBox="0 0 46 60"><path class="flow" d="M2 30 H40"/><path d="M34 22 L42 30 L34 38" fill="none" stroke="var(--red)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="index">
+            <div class="ih"><span>search index · icrow</span><b>35 fields</b></div>
+            <div class="field" style="animation-delay:.2s"><span>unique_id</span><span class="type t-kw">Keyword</span></div>
+            <div class="field" style="animation-delay:.45s"><span>warehouse</span><span class="type t-kw">Keyword</span></div>
+            <div class="field" style="animation-delay:.7s"><span>posting_date</span><span class="type t-dt">Date</span></div>
+            <div class="field" style="animation-delay:.95s"><span>product_description</span><span class="type t-tx">Text</span></div>
+            <div class="field" style="animation-delay:1.2s"><span>on_hand_qty</span><span class="type t-db">Double</span></div>
+            <div class="field" style="animation-delay:1.45s"><span>net_available_negative_flag</span><span class="type t-bo">Boolean</span></div>
+          </div>
+          <div class="ask" aria-live="off"><small>Ask the report</small><span id="typed">Show me all products in warehouse 07SC where the net available quantity is negative</span><span class="caret" aria-hidden="true"></span></div>
+          <p class="ask-note">Sample utterances and field names shown are from the Inventory Audit demo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VALUE ================= -->
+<section class="why" id="value" data-nav="Why KYR">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Why it matters</span>
+      <h2>Reports hold the answers. Files keep them locked away.</h2>
+      <p class="lede">Every scheduled report your ERP prints is full of answers people need: discrepancies, negative availability, open orders. Know Your Reports turns each one into a definition with four guarantees, and every guarantee is built by a specific step in the wizard.</p>
+    </div>
+    <div class="why-grid">
+      <div><span class="from">Step 5 · Generate Script</span><span class="word" style="color:var(--green)">Validated</span><p>The AI-written parsing script is test-run against the real file, and you see the extracted records before anything is saved.</p></div>
+      <div><span class="from">Step 2 · Context &amp; Roles</span><span class="word" style="color:var(--blue)">Role-secured</span><p>Business roles decide who can view. Functional roles decide who can manage. Both are suggested from the report itself.</p></div>
+      <div><span class="from">Step 3 · Sample Utterances</span><span class="word" style="color:var(--red)">Conversational</span><p>Natural-language sample questions teach the system how people will actually ask about this report.</p></div>
+      <div><span class="from">Step 6 · Summary</span><span class="word">Ready for BaaS</span><p>One click on “Save configuration” publishes the finished definition and schedules it to run.</p></div>
+    </div>
+    <div class="who"><b>Who it serves, in the demo report:</b><span class="p">Warehouse managers</span><span class="p">Inventory analysts</span><span class="p">Accounting &amp; finance teams</span><span class="p">Purchasing managers</span></div>
+  </div>
+</section>
+
+<!-- ================= SIX STEPS ================= -->
+<section id="steps" data-nav="Six steps">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">The wizard</span>
+      <h2>Six steps, one guided wizard</h2>
+      <p class="lede">Every step is AI-drafted first, and every AI suggestion can be reviewed, edited, or regenerated with “Use new AI suggestion.”</p>
+    </div>
+    <div class="rail pre" id="rail">
+      <div class="track"><i></i></div>
+      <a class="stepcard" href="#s1"><span class="badge"><img src="assets/icon-upload.png" alt=""><span class="n">1</span></span><h3>Upload Report</h3><p>Set ERP, report type &amp; source; attach a sample file for OCR + AI analysis</p></a>
+      <a class="stepcard" href="#s2"><span class="badge"><img src="assets/icon-roles.png" alt=""><span class="n">2</span></span><h3>Context &amp; Roles</h3><p>AI drafts business context and business/functional security roles</p></a>
+      <a class="stepcard" href="#s3"><span class="badge"><img src="assets/icon-utterances.png" alt=""><span class="n">3</span></span><h3>Sample Utterances</h3><p>AI writes natural-language sample queries, editable and expandable</p></a>
+      <a class="stepcard" href="#s4a"><span class="badge"><img src="assets/icon-schema.png" alt=""><span class="n">4</span></span><h3>Configure Schema</h3><p>Review every auto-detected column and type, and add any missing field</p></a>
+      <a class="stepcard" href="#s5a"><span class="badge"><img src="assets/icon-script.png" alt=""><span class="n">5</span></span><h3>Generate Script</h3><p>AI writes the parsing script, then validates it against real data</p></a>
+      <a class="stepcard" href="#s6"><span class="badge"><img src="assets/icon-summary.png" alt=""><span class="n">6</span></span><h3>Summary</h3><p>Review the full config, then Save configuration to publish to BaaS</p></a>
+    </div>
+    <div class="ai-note"><span class="tog" aria-hidden="true"></span><span><b>You stay in control.</b> AI does the first draft of context, roles, utterances, schema and script. A person reviews and approves every one of them before anything goes live.</span></div>
+  </div>
+</section>
+
+<!-- ================= WALKTHROUGH ================= -->
+<section class="walk" id="walkthrough" data-nav="Walkthrough" style="padding-top:0">
+  <div class="progress" aria-label="Walkthrough progress">
+    <div class="wrap" id="prog">
+      <a href="#s1" data-k="s1"><span class="d"></span>1 Upload</a>
+      <a href="#s2" data-k="s2"><span class="d"></span>2 Context &amp; Roles</a>
+      <a href="#s3" data-k="s3"><span class="d"></span>3 Utterances</a>
+      <a href="#s4a" data-k="s4"><span class="d"></span>4 Schema</a>
+      <a href="#s5a" data-k="s5"><span class="d"></span>5 Script</a>
+      <a href="#s6" data-k="s6"><span class="d"></span>6 Summary</a>
+    </div>
+  </div>
+  <div class="wrap" id="panels"></div>
+</section>
+
+<!-- ================= PIPELINE ================= -->
+<section id="pipeline" data-nav="Live pipeline">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">After you click save</span>
+      <h2>From configuration to live data</h2>
+      <p class="lede">“Save configuration” doesn't just store settings. It schedules a live pipeline based on the Run frequency chosen in Step 1.</p>
+    </div>
+    <div class="pipe" id="pipe">
+      <div class="wire" aria-hidden="true"><i></i></div>
+      <div class="node"><span class="ic"><img src="assets/icon-schedule.png" alt=""></span><span class="k">1 · Trigger</span><h3>Scheduled Trigger</h3><p>The Run frequency set in Step 1 (e.g. Daily) fires the job automatically, no manual kickoff needed.</p></div>
+      <div class="node"><span class="ic"><img src="assets/icon-erp.png" alt=""></span><span class="k">2 · Retrieve</span><h3>RPA Pulls the Report</h3><p>An RPA job connects to the source ERP and retrieves the latest report file for that run.</p></div>
+      <div class="node"><span class="ic"><img src="assets/icon-execute.png" alt=""></span><span class="k">3 · Parse</span><h3>Script Executes</h3><p>The generated &amp; validated parsing script runs against the fresh file, extracting every mapped field.</p></div>
+      <div class="node"><span class="ic"><img src="assets/icon-index.png" alt=""></span><span class="k">4 · Index</span><h3>Pushed to Search Index</h3><p>Structured results are pushed to the Search Index API. Instantly queryable, with no manual re-entry.</p></div>
+    </div>
+    <div class="loop-note">
+      <svg viewBox="0 0 34 34" aria-hidden="true"><path d="M28 17a11 11 0 1 1-3.2-7.8" fill="none" stroke="var(--red)" stroke-width="2.6" stroke-linecap="round"/><path d="M26 3v7h-7" fill="none" stroke="var(--red)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <p><b>Set once, it repeats.</b> The Run frequency configured in Step 1 drives this entire pipeline and repeats automatically from there.</p>
+    </div>
+    <div class="freq">Demo config · ERP <b>CSD</b> · Report type <b>icrow</b> · Source <b>IDM</b> · Object <b>SX_Stored_Reports</b> · Run frequency <b>Daily</b></div>
+  </div>
+</section>
+
+<!-- ================= RESULTS ================= -->
+<section class="walk" id="results" data-nav="Results">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Observability</span>
+      <h2>The result: every run, tracked</h2>
+      <p class="lede">Once indexed, each scheduled run shows up on a live Report Processing Stats dashboard.</p>
+    </div>
+    <div class="stats" id="stats">
+      <div class="stat"><div class="v" data-to="141">141</div><div class="l">Total runs</div></div>
+      <div class="stat ok"><div class="v" data-to="99">99</div><div class="l">Successful</div></div>
+      <div class="stat bad"><div class="v" data-to="42">42</div><div class="l">Failed</div></div>
+      <div class="stat"><div class="v" data-to="11831">11,831</div><div class="l">Records processed</div></div>
+    </div>
+    <div class="stats-grid" id="statsPanel"></div>
+  </div>
+</section>
+
+<!-- ================= CLOSE ================= -->
+<section class="close" id="next" data-nav="Next step">
+  <div class="wrap">
+    <span class="eyebrow">The takeaway</span>
+    <h2 style="margin-top:16px;font-size:clamp(2.1rem,5vw,3.6rem)">From raw report to BaaS, in six guided steps</h2>
+    <p class="lede" style="margin-top:16px">Every step pairs an AI-drafted first pass with full human control before anything is saved.</p>
+    <div class="benefits">
+      <div><span class="bi"><img src="assets/icon-utterances.png" alt=""></span><div><h3>AI drafts it all</h3><p>Context, roles, utterances, schema &amp; parsing script, every step, one click.</p></div></div>
+      <div><span class="bi"><img src="assets/icon-roles.png" alt=""></span><div><h3>Human-in-the-loop</h3><p>Review at every stage, with “Use new AI suggestion” always available.</p></div></div>
+      <div><span class="bi"><img src="assets/icon-script.png" alt=""></span><div><h3>Live validation</h3><p>Generated scripts are test-run against the real file before you trust them.</p></div></div>
+      <div><span class="bi"><img src="assets/icon-upload.png" alt=""></span><div><h3>One-click publish</h3><p>One “Save configuration” click publishes the complete, validated report straight to BaaS.</p></div></div>
+    </div>
+    <div class="ask-box">
+      <div>
+        <h3>Bring us one report.</h3>
+        <p>Pick the report your team opens, scrolls and re-keys most often. In one working session we will take it through all six steps with you:</p>
+        <ol>
+          <li>Upload a sample file and let the AI read it.</li>
+          <li>Review the context, roles, questions and fields it proposes.</li>
+          <li>Validate the parsing script on your real data, then save.</li>
+        </ol>
+      </div>
+      <a class="btn" href="#steps">Replay the six steps <span aria-hidden="true">↺</span></a>
+    </div>
+    <div class="legal"><span>Copyright © 2026. Infor. All Rights Reserved. infor.com</span><span>Know Your Reports · Report Configuration Wizard</span></div>
+  </div>
+</section>
+</main>
+
+<div class="pnav" role="navigation" aria-label="Presenter controls">
+  <button type="button" id="prev" aria-label="Previous section">‹</button>
+  <span class="lbl" id="plbl">Know Your Reports</span>
+  <button type="button" id="next-btn" aria-label="Next section">›</button>
+</div>
+
+<dialog class="lb" id="lb"><img id="lbimg" alt=""><button type="button" id="lbclose">Close</button></dialog>
+
+<script>
+/* Screenshot data: hotspot boxes are in the cropped image's pixel space (w x h). */
+const PANELS=[
+ {id:"s1",step:1,title:"Upload Report",img:"step1-upload",w:1641,h:859,
+  why:"Point it at a report. The wizard and the AI handle the rest.",
+  pts:[
+   ["Select <q>ERP</q>, <q>Report type</q>, <q>Run frequency</q>, <q>Report source</q> and <q>Source object</q> from guided fields and dropdowns",[[150,204,1160,166]]],
+   ["If a matching configuration already exists, the wizard loads it automatically and just asks for a new sample file",[[80,391,460,24]]],
+   ["Drag-and-drop (or <q>upload files</q>) accepts a sample report for the AI to analyze",[[105,475,1345,135]]],
+   ["A confirmation banner verifies the file was uploaded and OCR-extracted successfully",[[46,116,1486,40]]],
+   ["<q>Analyze with AI</q> kicks off the AI's read of the report content",[[85,731,1385,36]]]
+  ],cap:"Report Configuration Wizard · Step 1 · CSD / icrow / Daily / IDM / SX_Stored_Reports"},
+ {id:"s2",step:2,title:"Context & Roles",img:"step2-context-roles",w:1577,h:809,flip:1,
+  why:"Security and meaning are proposed from the report itself, not typed from scratch.",
+  pts:[
+   ["AI drafts a business context description directly from the uploaded report's content",[[58,239,1408,145]]],
+   ["A <q>Use new AI suggestion</q> toggle sits next to both Context and Roles, so we can either go with the suggestions generated in this run or keep the old configuration as it is",[[562,203,206,30],[204,401,206,30]]],
+   ["Business Roles (who can view) are auto-suggested and pre-checked based on the report content",[[138,437,240,125]]],
+   ["Functional Roles (who can manage) are auto-suggested and pre-checked the same way",[[778,437,260,75]]],
+   ["Each role has its own checkbox to include or exclude it, plus an <q>Add role</q> field for custom roles",[[138,564,362,42],[778,514,362,42]]]
+  ],cap:"4 business roles · 2 functional roles suggested for the Inventory Audit Report"},
+ {id:"s3",step:3,title:"Sample Utterances",img:"step3-utterances",w:1641,h:859,
+  why:"This is where a report learns to answer questions in plain language.",
+  pts:[
+   ["AI drafts natural-language sample queries directly from the report's fields, using placeholders for values that change per run",[[92,275,1360,296]]],
+   ["Every utterance is editable inline, with a trash icon to remove it",[[1452,278,32,290]]],
+   ["<q>+ Add Utterance</q> lets the user add more, up to a fixed cap tracked by a running counter",[[74,586,1408,54]]]
+  ],cap:"7 of 10 utterances · placeholders like <warehouse>, <quantity> and <date> change per run"},
+ {id:"s4a",step:4,title:"Configure Schema — Field Mapping",img:"step4-field-mapping",w:1569,h:839,flip:1,
+  why:"Every column is found and typed for you. Nothing is hidden, everything is overridable.",
+  pts:[
+   ["AI detects the full schema and shows <q>Total columns</q> and <q>Selected</q> counts",[[44,238,132,60]]],
+   ["Every column has its own checkbox to include or exclude it from the final config",[[114,306,32,512]]],
+   ["Each field gets an AI-assigned data type (Keyword, Date, Text, Double...) via dropdown, fully overridable",[[537,306,304,512]]]
+  ],cap:"35 columns detected · 35 selected"},
+ {id:"s4b",step:4,title:"Configure Schema — Bulk Actions",img:"step4-bulk-actions",w:1628,h:833,
+  why:"Wide report? Review it in seconds, and add anything the AI missed.",
+  pts:[
+   ["Scrolling reveals every detected column, including calculated fields and boolean flags",[[124,145,744,470]]],
+   ["<q>Select All</q> / <q>Deselect All</q> make bulk review fast on wide schemas",[[54,708,212,40]]],
+   ["A <q>Column name</q> field + type dropdown + <q>Add</q> button lets users register anything the AI missed",[[128,644,816,42]]]
+  ],cap:"calc_wt_ship_req_qty · serial_lot_indicator · net_available_negative_flag · alt_whse_functionality_used"},
+ {id:"s5a",step:5,title:"Generate Script — In Progress",img:"step5-generating",w:1679,h:851,flip:1,
+  why:"AI writes the parser. You watch it work, and it is never a black box.",
+  pts:[
+   ["<q>Generate script</q> triggers AI code generation from the confirmed schema and report content",[[64,227,158,38]]],
+   ["The control set stays visible mid-run. <q>Validating…</q> shows on the validate button while it works",[[227,227,134,38]]],
+   ["<q>Show script</q> remains on hand so the process is never a black box",[[367,227,110,38]]],
+   ["A live <q>Loading</q> indicator confirms the job is in flight",[[730,402,80,104]]]
+  ],cap:"AI generates a JavaScript parsing function based on your confirmed schema and report content"},
+ {id:"s5b",step:5,title:"Generate Script — Validated Output",img:"step5-validated",w:1627,h:856,
+  why:"Proof before trust. You see the real parsed rows before saving.",
+  pts:[
+   ["<q>Validate script</q> runs the generated parser and confirms how many records were extracted successfully",[[229,227,150,38],[64,273,232,24]]],
+   ["A live preview table renders the actual parsed columns so the output can be checked before saving",[[67,305,1410,190]]],
+   ["<q>Show script</q> reveals the underlying JavaScript for anyone who wants to inspect or fine-tune it",[[385,227,108,38]]]
+  ],cap:"✓ 3 records extracted successfully · unique_id, __ims_security, company, warehouse, posting_date …"},
+ {id:"s6",step:6,title:"Summary",img:"step6-summary",w:1596,h:833,flip:1,
+  why:"One screen, one decision, one click to go live.",
+  pts:[
+   ["Configuration Summary rolls everything up: File, Selected Fields, Context, Business Roles, Functional Roles, Utterances and Parsing Script status",[[66,198,1410,345]]],
+   ["One last review before anything goes live",[[28,122,1494,48]]],
+   ["<q>Save configuration</q> publishes the finished, validated report definition straight to BaaS",[[70,549,1412,38]]]
+  ],cap:"mail169755.pdf · 35 fields · 4 business roles · 2 functional roles · 7 utterances · script generated"}
+];
+const STATS={id:"st",img:"processing-stats",w:1481,h:745,
+  pts:[
+   ["Total runs, Successful vs. Failed counts, and total Records processed, at a glance",[[122,50,1244,74]]],
+   ["A success/failure donut chart and a weekly trend line make patterns and regressions easy to spot",[[196,186,1130,270]]],
+   ["A filterable run log breaks results down by Report type, ERP, Start time, End time, Status and Records",[[4,462,1452,282]]],
+   ["The Run frequency configured in Step 1 is what populates this log, closing the loop from configuration to observability",[[412,466,600,278]]]
+  ],cap:"Report Processing Stats · weekly trend (last 2 months)"};
+
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function shotHTML(p){
+  const boxes=p.pts.map((pt,i)=>pt[1].map(b=>{
+    const [x,y,w,h]=b, below=y/p.h<.08;
+    return `<span class="hs${below?" below":""}" data-i="${i}" style="left:${x/p.w*100}%;top:${y/p.h*100}%;width:${w/p.w*100}%;height:${h/p.h*100}%"><span class="tag">${i+1}</span></span>`;
+  }).join("")).join("");
+  return `<figure class="shot"><div class="chrome"><i></i><i></i><i></i><span>Report Configuration Wizard</span><button type="button" class="zoom" data-src="assets/${p.img}.webp" aria-label="Enlarge screenshot">Enlarge ⤢</button></div>
+    <div class="stage"><img src="assets/${p.img}.webp" width="${p.w}" height="${p.h}" alt="Screenshot: ${esc(p.title||"Report Processing Stats")}" loading="lazy"><span class="veil"></span>${boxes}</div>
+    <figcaption>${esc(p.cap)}</figcaption></figure>`;
+}
+function pointsHTML(p){
+  return `<ol class="points">${p.pts.map((pt,i)=>`<li tabindex="0" data-i="${i}"><span class="m">${i+1}</span><span>${pt[0]}</span></li>`).join("")}</ol>
+    <div class="tour"><button type="button" class="tt">Pause tour</button><span>Hover or tap a point to spotlight it</span></div>`;
+}
+const host=document.getElementById("panels");
+host.innerHTML=PANELS.map(p=>{
+  const bar=[1,2,3,4,5,6].map(n=>`<i class="${n<=p.step?"f":""}"></i>`).join("");
+  return `<article class="panel pre${p.flip?" flip":""}" id="${p.id}" data-step="s${p.step}">
+    <div class="copy"><span class="stepno">Step ${p.step} of 6 <span class="bar">${bar}</span></span><h3>${esc(p.title)}</h3><p class="why-line">${esc(p.why)}</p>${pointsHTML(p)}</div>
+    ${shotHTML(p)}</article>`;
+}).join("");
+document.getElementById("statsPanel").innerHTML=`<div class="copy" style="position:static">
+  <div class="donut-wrap"><svg class="donut" viewBox="0 0 120 120" role="img" aria-label="70 percent of runs successful, 30 percent failed"><circle class="bg" cx="60" cy="60" r="46"/><circle class="fg" id="donutFg" cx="60" cy="60" r="46" stroke-dasharray="289.03" stroke-dashoffset="${289.03*(1-99/141)}"/><text x="60" y="68">70%</text></svg>
+  <div class="legend"><span><i style="background:var(--green)"></i>Successful (70%) · 99</span><span><i style="background:var(--fail)"></i>Failed (30%) · 42</span></div></div>
+  ${pointsHTML(STATS)}</div>${shotHTML(STATS)}`;
+
+/* spotlight controller per block */
+function wire(block){
+  const items=[...block.querySelectorAll(".points li")], stage=block.querySelector(".stage"), btn=block.querySelector(".tt");
+  let cur=-1, timer=null, paused=reduce, visible=false;
+  function show(i){
+    cur=i; items.forEach((li,k)=>li.classList.toggle("on",k===i));
+    const boxes=stage.querySelectorAll(".hs"), on=[...boxes].filter(b=>+b.dataset.i===i);
+    const multi=on.length>1;
+    boxes.forEach(b=>{b.classList.toggle("on",+b.dataset.i===i);b.classList.toggle("multi",multi)});
+    stage.classList.toggle("spot",i>=0); stage.classList.toggle("multi",multi);
+  }
+  function tick(){ if(!paused&&visible) show((cur+1)%items.length) }
+  function start(){ stop(); if(!paused) timer=setInterval(tick,3600) }
+  function stop(){ clearInterval(timer); timer=null }
+  items.forEach((li,i)=>{
+    const pick=()=>{paused=true;btn.textContent="Resume tour";stop();show(i)};
+    li.addEventListener("mouseenter",pick); li.addEventListener("focus",pick); li.addEventListener("click",pick);
+  });
+  btn.addEventListener("click",()=>{paused=!paused;btn.textContent=paused?"Resume tour":"Pause tour";paused?stop():(tick(),start())});
+  if(reduce) btn.textContent="Start tour";
+  new IntersectionObserver(es=>es.forEach(e=>{
+    visible=e.isIntersecting;
+    if(visible){ if(cur<0) show(0); start() } else stop();
+  }),{threshold:.35}).observe(block);
+}
+document.querySelectorAll(".panel,#statsPanel").forEach(wire);
+
+/* reveal: elements start fully visible, motion is a gentle settle */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.remove("pre");io.unobserve(e.target)}}),{threshold:.2});
+document.querySelectorAll(".panel.pre,#rail").forEach(el=>io.observe(el));
+
+/* walkthrough progress */
+const prog=[...document.querySelectorAll("#prog a")];
+const order=["s1","s2","s3","s4","s5","s6"];
+const progIO=new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting) return;
+  const idx=order.indexOf(e.target.dataset.step);
+  prog.forEach((a,i)=>{a.classList.toggle("on",i===idx);a.classList.toggle("done",i<idx)});
+}),{rootMargin:"-45% 0px -50% 0px"});
+document.querySelectorAll(".panel").forEach(p=>progIO.observe(p));
+
+/* pipeline sequencing */
+const nodes=[...document.querySelectorAll("#pipe .node")]; let ni=0, pipeTimer=null;
+function stepPipe(){ nodes.forEach((n,i)=>n.classList.toggle("live",i===ni)); ni=(ni+1)%nodes.length }
+new IntersectionObserver(es=>es.forEach(e=>{
+  clearInterval(pipeTimer);
+  if(e.isIntersecting){ stepPipe(); if(!reduce) pipeTimer=setInterval(stepPipe,1400) }
+}),{threshold:.3}).observe(document.getElementById("pipe"));
+
+/* count-up + donut */
+let counted=false;
+new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting||counted||reduce) return; counted=true;
+  const fg=document.getElementById("donutFg"), C=289.03;
+  fg.style.transition="none"; fg.style.strokeDashoffset=C; fg.getBoundingClientRect();
+  fg.style.transition=""; fg.style.strokeDashoffset=C*(1-99/141);
+  document.querySelectorAll("#stats .v").forEach(v=>{
+    const to=+v.dataset.to, t0=performance.now(), d=1600;
+    (function f(t){const k=Math.min(1,(t-t0)/d), e=1-Math.pow(1-k,3); v.textContent=Math.round(to*e).toLocaleString("en-US"); if(k<1) requestAnimationFrame(f)})(t0);
+  });
+}),{threshold:.4}).observe(document.getElementById("stats"));
+
+/* hero typing loop over real sample utterances */
+const UTT=[
+ "Show me all products in warehouse 07SC where the net available quantity is negative",
+ "Which items in warehouse 07SC have a discrepancy between on-hand quantity and calculated values?",
+ "What items have open purchase orders (on order quantity) in warehouse 07SC?",
+ "Show me all serial or lot-tracked products flagged during the audit in warehouse 07SC",
+ "List all items with back order or demand quantities greater than zero for warehouse 07SC"
+];
+if(!reduce){
+  const el=document.getElementById("typed"); let u=0;
+  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+  (async function loop(){
+    await sleep(3200);
+    for(;;){
+      u=(u+1)%UTT.length; const s=UTT[u];
+      for(let i=el.textContent.length;i>=0;i-=3){el.textContent=el.textContent.slice(0,i);await sleep(12)}
+      for(let i=1;i<=s.length;i++){el.textContent=s.slice(0,i);await sleep(26)}
+      await sleep(3000);
+    }
+  })();
+}
+
+/* presenter navigation: arrow keys / buttons jump section to section */
+const secs=[...document.querySelectorAll("section[data-nav], .panel")].sort((a,b)=>a.offsetTop-b.offsetTop);
+const lbl=document.getElementById("plbl"), links=[...document.querySelectorAll(".toplinks a")];
+function curIdx(){ const y=scrollY+innerHeight*.3; let k=0; secs.forEach((s,i)=>{ if(s.getBoundingClientRect().top+scrollY<=y) k=i }); return k }
+function go(d){ const i=Math.max(0,Math.min(secs.length-1,curIdx()+d)); secs[i].scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"}) }
+document.getElementById("prev").onclick=()=>go(-1);
+document.getElementById("next-btn").onclick=()=>go(1);
+addEventListener("keydown",e=>{
+  if(e.target.closest("input,textarea,select,dialog")) return;
+  if(e.key==="ArrowRight"||e.key==="PageDown"){e.preventDefault();go(1)}
+  if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();go(-1)}
+});
+function label(){
+  const s=secs[curIdx()];
+  lbl.textContent=s.classList.contains("panel")?`Step ${PANELS.find(p=>p.id===s.id).step} of 6`:s.dataset.nav;
+  const top=[...document.querySelectorAll("section[data-nav]")].filter(x=>x.getBoundingClientRect().top<innerHeight*.3).pop();
+  links.forEach(a=>a.classList.toggle("on",top&&a.getAttribute("href")==="#"+top.id));
+}
+addEventListener("scroll",()=>requestAnimationFrame(label),{passive:true}); label();
+
+/* lightbox */
+const lb=document.getElementById("lb"), lbimg=document.getElementById("lbimg");
+document.addEventListener("click",e=>{
+  const z=e.target.closest(".zoom, .stage img"); if(!z) return;
+  const src=z.dataset.src||z.getAttribute("src"); lbimg.src=src; lbimg.alt=z.alt||"Enlarged screenshot";
+  try{lb.showModal()}catch(_){lb.setAttribute("open","")}
+});
+document.getElementById("lbclose").onclick=()=>lb.close();
+lb.addEventListener("click",e=>{if(e.target===lb) lb.close()});
+</script>
