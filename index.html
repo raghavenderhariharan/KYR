@@ -241,8 +241,8 @@ a{color:var(--purple)}
 .node .k{font:500 .7rem/1 var(--f-mono);letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
 .node p{color:var(--muted);font-size:.92rem}
 .node .k{color:var(--c)!important}
-.node.live{border-color:var(--c);transform:translateY(-6px);box-shadow:0 18px 36px -16px var(--c);background:color-mix(in srgb,var(--c) 6%,var(--surface))}
-.node.live .ic{transform:scale(1.08) rotate(-4deg)}
+.node:hover,.node:focus-within{border-color:var(--c);transform:translateY(-6px);box-shadow:0 18px 36px -16px var(--c);background:color-mix(in srgb,var(--c) 6%,var(--surface))}
+.node:hover .ic,.node:focus-within .ic{transform:scale(1.08) rotate(-4deg)}
 .node .ic{transition:transform .7s}
 @media (max-width:900px){.pipe{grid-template-columns:1fr 1fr}.pipe .wire{display:none}}
 @media (max-width:520px){.pipe{grid-template-columns:1fr}}
@@ -453,10 +453,10 @@ dialog.lb button{position:absolute;right:10px;top:10px;border:0;border-radius:8p
     </div>
     <div class="pipe" id="pipe">
       <div class="wire" aria-hidden="true"><i></i></div>
-      <div class="node" style="--c:var(--red)"><span class="ic"><img src="assets/icon-schedule.png" alt=""></span><span class="k">1 · Trigger</span><h3>Scheduled Trigger</h3><p>The Run frequency set in Step 1 (e.g. Daily) fires the job automatically, no manual kickoff needed.</p></div>
-      <div class="node" style="--c:var(--magenta)"><span class="ic"><img src="assets/icon-erp.png" alt=""></span><span class="k">2 · Retrieve</span><h3>RPA Pulls the Report</h3><p>An RPA job connects to the source ERP and retrieves the latest report file for that run.</p></div>
-      <div class="node" style="--c:var(--violet)"><span class="ic"><img src="assets/icon-execute.png" alt=""></span><span class="k">3 · Parse</span><h3>Script Executes</h3><p>The generated &amp; validated parsing script runs against the fresh file, extracting every mapped field.</p></div>
-      <div class="node" style="--c:var(--teal)"><span class="ic"><img src="assets/icon-index.png" alt=""></span><span class="k">4 · Index</span><h3>Pushed to Search Index</h3><p>Structured results are pushed to the Search Index API. Instantly queryable, with no manual re-entry.</p></div>
+      <div class="node" tabindex="0" style="--c:var(--red)"><span class="ic"><img src="assets/icon-schedule.png" alt=""></span><span class="k">1 · Trigger</span><h3>Scheduled Trigger</h3><p>The Run frequency set in Step 1 (e.g. Daily) fires the job automatically, no manual kickoff needed.</p></div>
+      <div class="node" tabindex="0" style="--c:var(--magenta)"><span class="ic"><img src="assets/icon-erp.png" alt=""></span><span class="k">2 · Retrieve</span><h3>RPA Pulls the Report</h3><p>An RPA job connects to the source ERP and retrieves the latest report file for that run.</p></div>
+      <div class="node" tabindex="0" style="--c:var(--violet)"><span class="ic"><img src="assets/icon-execute.png" alt=""></span><span class="k">3 · Parse</span><h3>Script Executes</h3><p>The generated &amp; validated parsing script runs against the fresh file, extracting every mapped field.</p></div>
+      <div class="node" tabindex="0" style="--c:var(--teal)"><span class="ic"><img src="assets/icon-index.png" alt=""></span><span class="k">4 · Index</span><h3>Pushed to Search Index</h3><p>Structured results are pushed to the Search Index API. Instantly queryable, with no manual re-entry.</p></div>
     </div>
     <div class="loop-note">
       <svg viewBox="0 0 34 34" aria-hidden="true"><path d="M28 17a11 11 0 1 1-3.2-7.8" fill="none" stroke="var(--purple)" stroke-width="2.6" stroke-linecap="round"/><path d="M26 3v7h-7" fill="none" stroke="var(--purple)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -663,13 +663,6 @@ const progIO=new IntersectionObserver(es=>es.forEach(e=>{
 }),{rootMargin:"-45% 0px -50% 0px"});
 document.querySelectorAll(".panel").forEach(p=>progIO.observe(p));
 
-/* pipeline sequencing */
-const nodes=[...document.querySelectorAll("#pipe .node")]; let ni=0, pipeTimer=null;
-function stepPipe(){ nodes.forEach((n,i)=>n.classList.toggle("live",i===ni)); ni=(ni+1)%nodes.length }
-new IntersectionObserver(es=>es.forEach(e=>{
-  clearInterval(pipeTimer);
-  if(e.isIntersecting){ stepPipe(); if(!reduce) pipeTimer=setInterval(stepPipe,2200) }
-}),{threshold:.3}).observe(document.getElementById("pipe"));
 
 /* count-up + donut */
 let counted=false;
